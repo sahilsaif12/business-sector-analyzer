@@ -2,3 +2,6 @@ fastapi
 python-dotenv
 uvicorn
 httpx
+PyJWT
+passlib[bcrypt]
+pydantic[email]
