@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException, Request,Depends
 from fastapi.responses import  PlainTextResponse
 
 from app.middleware.jwt_auth import require_auth
+from app.middleware.rate_limiter import rate_limiter
 from app.models.user_store import users
 from app.services.analyze_service import analyze_sector, validate_sector
 
@@ -10,7 +11,8 @@ router = APIRouter()
 MAX_API_CALLS_PER_SESSION=10
 
 @router.get("/analyze/{sector}")
-async def analyze(sector: str, request: Request,user_email=Depends(require_auth)):
+async def analyze(sector: str, request: Request,user_email=Depends(require_auth),_=Depends(rate_limiter)):
+    return{}
     # session usage tracking
     session = users.get(user_email, {}).get("session")
     if session:

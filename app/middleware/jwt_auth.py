@@ -34,6 +34,7 @@ def require_auth(request: Request):
         if datetime.utcnow() > expires_at:
             raise HTTPException(status_code=400, detail="Session has expired, please login again")
 
+        request.state.user_email = email
         return email  
 
     except ExpiredSignatureError:
