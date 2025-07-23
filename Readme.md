@@ -6,10 +6,21 @@ An intelligent API system that leverages **Google Gemini** and **SerpAPI** to va
 
 ### see sample output results
 [check here](https://github.com/sahilsaif12/business-sector-analyzer/tree/main/sampleOutputs)
+
+
 ---
 ### Live deployed link
 [live here](https://business-sector-analyzer.onrender.com/)
+
 [for swagger testing check this](https://business-sector-analyzer.onrender.com/docs)
+
+---
+### see the demo video
+[watch the loom](https://www.loom.com/share/92aa6de6a07d44d6a4fc7df774330f06?sid=8b2b52cf-642f-42d7-84f9-3bfc5c82b378)
+
+
+
+
 ---
 https://business-sector-analyzer.onrender.com/
 ##  Key Achieved parts
