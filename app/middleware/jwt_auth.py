@@ -17,22 +17,22 @@ def require_auth(request: Request):
 
         # do user exists?
         if email not in users:
-            raise HTTPException(status_code=401, detail="User not found, create one")
+            raise HTTPException(status_code=404, detail="User not found, create one")
 
         session = users[email].get("session")
 
         # Check session exists
         if not session:
-            raise HTTPException(status_code=401, detail="No active session found , please login again")
+            raise HTTPException(status_code=400, detail="No active session found , please login again")
 
         # Check token match
         if session.get("token") != token:
-            raise HTTPException(status_code=401, detail="Token got tempered, please login again")
+            raise HTTPException(status_code=400, detail="Token got tempered, please login again")
 
         # Checking is token expired?
         expires_at = datetime.fromisoformat(session["expires_at"])
         if datetime.utcnow() > expires_at:
-            raise HTTPException(status_code=401, detail="Session has expired, please login again")
+            raise HTTPException(status_code=400, detail="Session has expired, please login again")
 
         return email  
 
@@ -40,4 +40,4 @@ def require_auth(request: Request):
         raise HTTPException(status_code=400, detail="Session has expired, please login again")
     except Exception as e :
         print("error",e)
-        raise HTTPException(status_code=401, detail="Invalid or expired token, please login again")
+        raise HTTPException(status_code=400, detail="Invalid or expired token, please login again")
