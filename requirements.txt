@@ -6,3 +6,4 @@ PyJWT
 passlib[bcrypt]
 pydantic[email]
 google-genai
+google-search-results
