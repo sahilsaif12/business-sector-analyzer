@@ -20,6 +20,7 @@ def login(auth: AuthRequest):
     if user:
         if not verify_password(auth.password, user["password"]):
             raise HTTPException(status_code=401, detail="Wrong password")
+        clearSession(auth.email)
     else:
         create_user(auth.email, auth.password)
 

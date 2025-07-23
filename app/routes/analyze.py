@@ -1,13 +1,25 @@
+from datetime import datetime
 from fastapi import APIRouter, HTTPException, Request,Depends
 from fastapi.responses import  PlainTextResponse
 
 from app.middleware.jwt_auth import require_auth
+from app.models.user_store import users
 from app.services.analyze_service import analyze_sector, validate_sector
 
 router = APIRouter()
 
 @router.get("/analyze/{sector}")
-async def analyze(sector: str, request: Request,user=Depends(require_auth)):
+async def analyze(sector: str, request: Request,user_email=Depends(require_auth)):
+    # session usage tracking
+    session = users.get(user_email, {}).get("session")
+    if session:
+        if "usage" not in session:
+            session["usage"] = {
+                "analyze_calls": 0,
+                "last_call_at": None
+            }
+        session["usage"]["analyze_calls"] += 1
+        session["usage"]["last_call_at"] = datetime().utcnow().isoformat()
     if not sector:
         raise HTTPException(status_code=400, detail="Sector is required")
     isSectorValid=validate_sector(sector)
