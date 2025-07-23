@@ -1,7 +1,8 @@
 
-from fastapi import APIRouter, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel,EmailStr
+from app.middleware.jwt_auth import require_auth
 from app.services.auth_service import *
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -34,7 +35,9 @@ def login(auth: AuthRequest):
     return response
 
 
+
 @router.post("/logout")
-def logout(response: Response):
+def logout(request: Request, response: Response, user_email=Depends(require_auth)):
+    clearSession(user_email)
     response.delete_cookie("access_token")
     return {"message": "you are Logged out successfully"}
