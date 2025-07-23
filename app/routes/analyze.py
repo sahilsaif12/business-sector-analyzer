@@ -12,7 +12,6 @@ MAX_API_CALLS_PER_SESSION=10
 
 @router.get("/analyze/{sector}")
 async def analyze(sector: str, request: Request,user_email=Depends(require_auth),_=Depends(rate_limiter)):
-    return{}
     # session usage tracking
     session = users.get(user_email, {}).get("session")
     if session:

@@ -7,7 +7,11 @@ An intelligent API system that leverages **Google Gemini** and **SerpAPI** to va
 ### see sample output results
 [check here](https://github.com/sahilsaif12/business-sector-analyzer/tree/main/sampleOutputs)
 ---
-
+### Live deployed link
+[live here](https://business-sector-analyzer.onrender.com/)
+[for swagger testing check this](https://business-sector-analyzer.onrender.com/docs)
+---
+https://business-sector-analyzer.onrender.com/
 ##  Key Achieved parts
 
 - ✅ **Single endpoint login/registration with JWT**
