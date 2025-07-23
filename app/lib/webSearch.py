@@ -8,7 +8,7 @@ params = {
   "gl": "in",
 }
 
-def getRecentNews(sector:str,num_results: int = 20):
+def getRecentNews(sector:str,num_results: int = 25):
     if not sector:
         return None
     params["q"] = f"recent news on {sector} sector"
@@ -16,7 +16,6 @@ def getRecentNews(sector:str,num_results: int = 20):
     try:
         search = GoogleSearch(params)
         results = search.get_dict()
-        print("results",results)
 
         # Extract structured recent news data for feeding to Gemini for better analysis
         articles = results.get("news_results", [])[:num_results]
@@ -33,8 +32,9 @@ def getRecentNews(sector:str,num_results: int = 20):
                 cleaned_articles.append(cleaned)
 
         if not cleaned_articles:
+            #  will still try to analyze the sector with historical data and market-based insights from gemini.
             print("No valid recent news articles found regarding that sector via web search .")
-        print("cleaned_articles",cleaned_articles)
+
         return cleaned_articles
 
     except Exception as e:

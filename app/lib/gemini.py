@@ -14,7 +14,7 @@ def askAi(text:str, retries: int = 3,delay=1)->str | None:
                 model='gemini-2.5-flash',
                 contents=text
             )
-            print("response",response.text.strip())
+            print("sector validation: ",response.text.strip())
             return response.text.strip()
         except Exception as e:
             

@@ -1,7 +1,6 @@
-from fastapi import APIRouter, HTTPException, Request,Depends
+from fastapi import APIRouter, HTTPException, Request,Depends, Response
+from fastapi.responses import  PlainTextResponse
 
-from app.lib.gemini import askAi
-from app.lib.prompts import sector_validation_prompt
 from app.middleware.jwt_auth import require_auth
 from app.services.analyze_service import analyze_sector, validate_sector
 
@@ -22,7 +21,6 @@ async def analyze(sector: str, request: Request,user=Depends(require_auth)):
     markdown_report = analyze_sector(sector)
 
     if markdown_report:
-        return {"message": f"Analyzing sector: {sector}: web search completed"}
-
-   
-    return {"message": f"Analyzing sector: {sector}"}
+        return PlainTextResponse(content=markdown_report)
+    else:
+        return {"message": f"could not analyze for {sector} sector due to AI models unavailability . Please try again after some time."}
