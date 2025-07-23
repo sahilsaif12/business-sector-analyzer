@@ -7,19 +7,29 @@ from app.models.user_store import users
 from app.services.analyze_service import analyze_sector, validate_sector
 
 router = APIRouter()
+MAX_API_CALLS_PER_SESSION=10
 
 @router.get("/analyze/{sector}")
 async def analyze(sector: str, request: Request,user_email=Depends(require_auth)):
     # session usage tracking
     session = users.get(user_email, {}).get("session")
     if session:
+        
         if "usage" not in session:
             session["usage"] = {
                 "analyze_calls": 0,
                 "last_call_at": None
             }
+
+        if session["usage"]["analyze_calls"] >= MAX_API_CALLS_PER_SESSION:
+            raise HTTPException(
+                status_code=429,
+                detail=f"Session usage limit exceeded for analyzing sector."
+            )
+
         session["usage"]["analyze_calls"] += 1
-        session["usage"]["last_call_at"] = datetime().utcnow().isoformat()
+        session["usage"]["last_call_at"] = datetime.utcnow().isoformat()
+
     if not sector:
         raise HTTPException(status_code=400, detail="Sector is required")
     isSectorValid=validate_sector(sector)
