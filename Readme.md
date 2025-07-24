@@ -10,6 +10,8 @@ An intelligent API system that leverages **Google Gemini** and **SerpAPI** to va
 
 ---
 ### Live deployed link
+
+(service deployed to render, so sometime its basically take 50-60 sec downtime because of inactivity, so requesting you wait 50-60 secs for spin up the service if its goes down due to inactivity)
 [live here](https://business-sector-analyzer.onrender.com/)
 
 [for swagger testing check this](https://business-sector-analyzer.onrender.com/docs)
